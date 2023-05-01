@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static board.Orientarion.*;
+import static board.Orientarion.EAST;
+import static board.Orientarion.NORTH;
+import static board.Orientarion.SOUTH;
+import static board.Orientarion.WEST;
+
 
 public enum BlockTemplates {
     VERTICAL(new int[][] {
@@ -113,8 +117,8 @@ public enum BlockTemplates {
         ArrayList<BlockTemplates> result = new ArrayList<>();
         for (BlockTemplates template : BlockTemplates.values()) {
             List<Orientarion> points = Arrays.asList(template.endPoints);
-                if (this != template && points.contains(orientarion.getOposite())) {
-                    result.add(template);
+            if (this != template && points.contains(orientarion.getOposite())) {
+                result.add(template);
             }
         }
         return result;

@@ -38,7 +38,7 @@ public class BoardBlock implements java.io.Serializable {
         this.createNodes();
         this.buildPath();
         Collections.reverse(this.path);
-        Land midLand = (Land) this.nodes[5][5];
+        Land midLand = (Land)this.nodes[5][5];
         midLand.setTower(new Tower(this.nodeSize * 4 * this.y, this.nodeSize * 4 * this.x, "Base", "assets\\towers\\base.png"));
     }
 
@@ -84,37 +84,37 @@ public class BoardBlock implements java.io.Serializable {
 
     private void buildPath() {
         Node start = null;
-        int x = 0;
-        int y = 0;
+        int xPos = 0;
+        int yPos = 0;
         switch (this.orientarion) {
             case NORTH -> {
                 start = this.nodes[0][4];
-                x = 4;
-                y = 0;
+                xPos = 4;
+                yPos = 0;
             }
             case EAST -> {
                 start = this.nodes[4][8];
-                x = 8;
-                y = 4;
+                xPos = 8;
+                yPos = 4;
             }
             case WEST -> {
                 start = this.nodes[4][0];
-                x = 0;
-                y = 4;
+                xPos = 0;
+                yPos = 4;
             }
             case SOUTH -> {
                 start = this.nodes[8][4];
-                x = 4;
-                y = 8;
+                xPos = 4;
+                yPos = 8;
             }
         }
 
-        this.buildPathRecurs(start, x, y);
+        this.buildPathRecurs(start, xPos, yPos);
 
     }
 
     private void buildPathRecurs(Node start, int x, int y) {
-        this.path.add((Road) start);
+        this.path.add((Road)start);
         if (y + 1 < 9 && y + 1 >= 0 &&
                 this.nodes[y + 1][x] instanceof Road &&
                 !this.path.contains(this.nodes[y + 1][x])) {

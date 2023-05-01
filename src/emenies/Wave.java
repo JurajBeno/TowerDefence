@@ -16,8 +16,8 @@ public class Wave {
     public Wave(double roundMultiplier, ArrayList<Road> path) {
         this.y = path.get(path.size() - 1).getY();
         this.x = path.get(path.size() - 1).getX();
-        this.numberOfHeavy = (int) (roundMultiplier * 1);
-        this.numberOfLight = (int) (roundMultiplier * 2);
+        this.numberOfHeavy = (int)(roundMultiplier * 1);
+        this.numberOfLight = (int)(roundMultiplier * 2);
         this.attackers = new ArrayList<>();
         for (Road road : path) {
             System.out.println(road.getY() + " " + road.getX());
@@ -49,7 +49,7 @@ public class Wave {
             index++;
         }
         for (Integer deleteIndex : deleteIndexes) {
-            this.attackers.remove((int) deleteIndex);
+            this.attackers.remove((int)deleteIndex);
         }
     }
 

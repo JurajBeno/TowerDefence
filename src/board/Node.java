@@ -1,7 +1,7 @@
 package board;
 
 
-import controls.ClickResults.ClickOnBoardResult;
+import controls.clickResults.ClickOnBoardResult;
 
 public interface Node {
     int getX();

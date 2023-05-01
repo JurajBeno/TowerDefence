@@ -1,7 +1,7 @@
 package board;
 
-import controls.ClickResults.ClickOnBoardResult;
-import controls.ClickResults.MissClick;
+import controls.clickResults.ClickOnBoardResult;
+import controls.clickResults.MissClick;
 import fri.shapesge.Image;
 
 public class Road implements Node, java.io.Serializable {

@@ -1,9 +1,9 @@
 package board;
 
-import controls.ClickResults.ClickOnBoardResult;
-import controls.ClickResults.MissClick;
-import controls.ClickResults.PlaceTowerResult;
-import controls.ClickResults.StartWaveResult;
+import controls.clickResults.ClickOnBoardResult;
+import controls.clickResults.MissClick;
+import controls.clickResults.PlaceTowerResult;
+import controls.clickResults.StartWaveResult;
 
 import java.util.ArrayList;
 import java.util.Random;

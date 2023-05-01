@@ -9,7 +9,7 @@ public class HpBar implements java.io.Serializable {
 
     public HpBar(int x, int y, int hp) {
         this.outer = new Rectangle(x, y - 5);
-        this.outer.changeSize(15,4);
+        this.outer.changeSize(15, 4);
         this.outer.changeColor("black");
         this.outer.makeVisible();
         this.inner = new Rectangle(x + 1, y + 1 - 5);

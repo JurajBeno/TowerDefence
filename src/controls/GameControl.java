@@ -1,13 +1,17 @@
 package controls;
 
-import controls.ClickResults.ClickOnBoardResult;
-import controls.ClickResults.StartWaveResult;
+import controls.clickResults.ClickOnBoardResult;
+import controls.clickResults.StartWaveResult;
 import fri.shapesge.Manager;
 import mainPackage.Game;
 import window.StartMenuWindow;
 import window.StartMenuOption;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 //TODO think out how will saving and loading games work
@@ -97,11 +101,11 @@ public class GameControl implements java.io.Serializable {
         try {
             FileInputStream fis = new FileInputStream("gameSaves\\game.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            this.game = (Game) ois.readObject();
-           ois.close();
-           return true;
+            this.game = (Game)ois.readObject();
+            ois.close();
+            return true;
         } catch (ClassNotFoundException | IOException e) {
-           return false;
+            return false;
         }
     }
 
@@ -113,7 +117,7 @@ public class GameControl implements java.io.Serializable {
 
     public void moveDown() {
         if (this.game != null) {
-        this.game.move(-this.cameraSpeed, 0);
+            this.game.move(-this.cameraSpeed, 0);
         }
     }
 

@@ -1,7 +1,7 @@
 package board;
 
-import controls.ClickResults.ClickOnBoardResult;
-import controls.ClickResults.PlaceTowerResult;
+import controls.clickResults.ClickOnBoardResult;
+import controls.clickResults.PlaceTowerResult;
 import fri.shapesge.Image;
 import towers.Tower;
 
@@ -15,7 +15,7 @@ public class Land implements Node, java.io.Serializable {
     public Land(int y, int x, int height) {
         this.y = y;
         this.x = x;
-        this.img = new Image(("assets\\Tiles\\miniLand0.png"), x,y);
+        this.img = new Image(("assets\\Tiles\\miniLand0.png"), x, y);
         this.img.makeVisible();
         this.height = height;
     }

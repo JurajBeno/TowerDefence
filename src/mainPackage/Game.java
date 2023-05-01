@@ -2,7 +2,7 @@ package mainPackage;
 
 
 import board.Board;
-import controls.ClickResults.ClickOnBoardResult;
+import controls.clickResults.ClickOnBoardResult;
 import emenies.Wave;
 
 import java.util.Random;

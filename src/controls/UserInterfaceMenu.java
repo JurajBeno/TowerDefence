@@ -21,4 +21,13 @@ public class UserInterfaceMenu {
     public void resetHpBar() {
         this.hpBar.resetBar();
     }
+
+    public void deselect() {
+        this.towersMenu.deselect();
+    }
+
+    public void makeVisible() {
+        this.hpBar.makeVisible();
+        this.towersMenu.makeVisible();
+    }
 }

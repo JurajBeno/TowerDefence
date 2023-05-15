@@ -40,7 +40,7 @@ public class BoardBlock implements java.io.Serializable {
         this.createNodes();
         this.buildPath();
         Collections.reverse(this.path);
-        Land midLand = (Land)this.nodes[5][5];
+        Land midLand = (Land)this.nodes[4][4];
         midLand.setTower(new Tower( "Base", "assets\\towers\\base.png"));
     }
 

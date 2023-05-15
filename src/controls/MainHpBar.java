@@ -10,10 +10,16 @@ public class MainHpBar {
     public MainHpBar(int hp) {
         this.backRound = new Rectangle(50, 250);
         this.backRound.changeColor("black");
+        this.backRound.changeSize(50, 500);
         this.backRound.makeVisible();
-        this.hpBar = new Rectangle(48, 248);
+
+        this.hpBar = new Rectangle(50, 250);
+        this.hpBar.changeSize(46, 496);
+        this.hpBar.moveHorizontal(2);
+        this.hpBar.moveVertical(2);
         this.hpBar.changeColor("green");
         this.hpBar.makeVisible();
+
         this.hp = hp;
         this.originalHp = hp;
     }
@@ -24,5 +30,10 @@ public class MainHpBar {
 
     public void resetBar() {
         this.hp = this.originalHp;
+    }
+
+    public void makeVisible() {
+        this.backRound.makeVisible();
+        this.hpBar.makeVisible();
     }
 }

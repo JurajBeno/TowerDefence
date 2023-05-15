@@ -1,6 +1,7 @@
 package controls;
 
 import controls.clickResults.ClickOnBoardResult;
+import controls.clickResults.MissClick;
 import controls.clickResults.StartWaveResult;
 import fri.shapesge.Manager;
 import mainPackage.Game;
@@ -25,7 +26,7 @@ public class GameControl implements java.io.Serializable {
     private Game game;
     private final StartMenuWindow startGameWindow;
     private final Random random;
-    private final UserInterfaceMenu uim;
+    private UserInterfaceMenu uim;
     private int cameraSpeed;
     private boolean placingTower;
     private DefenceTower towerToPlace;
@@ -37,7 +38,6 @@ public class GameControl implements java.io.Serializable {
         this.startGameWindow = new StartMenuWindow();
         this.game = null;
         this.cameraSpeed = 10;
-        this.uim = new UserInterfaceMenu(100);
         this.placingTower = false;
     }
 
@@ -46,28 +46,35 @@ public class GameControl implements java.io.Serializable {
     }
 
     public void clickOnPosition(int x, int y) {
-        if (this.placingTower) {
-            this.game.placeTower(this.towerToPlace, y, x);
-            this.placingTower = false;
-            this.towerToPlace = null;
+        if (this.uim != null) {
+            TowerSelected towerSelected = this.uim.click(y, x);
+            if (this.placingTower && towerSelected == TowerSelected.MISSCLICK) {
+                this.game.placeTower(this.towerToPlace, y, x);
+                this.uim.deselect();
+                this.placingTower = false;
+                this.towerToPlace = null;
+            }
         }
 
         if (this.startGameWindow.isVisible() && this.startGameWindow.isClickedOn(y, x)) {
             StartMenuOption option = this.startGameWindow.click(y, x);
             if (option != StartMenuOption.MISSCLICK) {
                 this.handleMenuChoice(option);
+                return;
             }
         } else {
             ClickOnBoardResult clickResult = this.game.click(y, x);
             if (clickResult instanceof StartWaveResult startWave) {
+                this.uim.makeVisible();
                 this.game.startWave();
                 return;
             }
         }
+
+        this.uim.deselect();
         TowerSelected towerSelected = this.uim.click(y, x);
-        if (towerSelected == TowerSelected.MISSCLICK) {
-            return;
-        } else {
+        if (towerSelected != TowerSelected.MISSCLICK) {
+            this.placingTower = true;
             this.chooseTowerToPlace(towerSelected);
         }
     }
@@ -102,12 +109,14 @@ public class GameControl implements java.io.Serializable {
             case STARTGAME -> {
                 this.game = new Game(this.random);
                 this.startGameWindow.setInvisible();
+                this.uim = new UserInterfaceMenu(100);
             }
             case LOADGAME -> {
                 if (!this.loadGame()) {
                     this.startGameWindow.informUnsuccesfulLoad();
                 } else {
                     this.startGameWindow.setInvisible();
+                    this.uim = new UserInterfaceMenu(100);
                 }
             }
             case EXIT -> System.exit(0);

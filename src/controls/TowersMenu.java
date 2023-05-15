@@ -14,53 +14,76 @@ public class TowersMenu {
     private Rectangle backGroundPoison;
 
     public TowersMenu() {
-        this.backGroundBalista = new Rectangle(150, 500);
+        this.backGroundBalista = new Rectangle(650, 750);
         this.backGroundBalista.changeSize(50, 50);
         this.backGroundBalista.changeColor("yellow");
         this.backGroundBalista.makeVisible();
 
-        this.balistIcon = new Image("towers\\towerIcons\\balistaTowerIco.png", 150, 500);
+        this.balistIcon = new Image("assets/towers/towerIcons/balistaTowerIco.png", 650, 750);
         this.balistIcon.makeVisible();
 
-        this.backGroundFire = new Rectangle(200, 500);
+        this.backGroundFire = new Rectangle(700, 750);
         this.backGroundFire.changeSize(50, 50);
         this.backGroundFire.changeColor("yellow");
         this.backGroundFire.makeVisible();
 
-        this.fireIcon = new Image("towers\\towerIcons\\fireTowerIco.png", 200, 500);
+        this.fireIcon = new Image("assets/towers/towerIcons/fireTowerIco.png", 700, 750);
         this.fireIcon.makeVisible();
 
-        this.backGroundFrost = new Rectangle(250, 500);
+        this.backGroundFrost = new Rectangle(750, 750);
         this.backGroundFrost.changeSize(50, 50);
         this.backGroundFrost.changeColor("yellow");
         this.backGroundFrost.makeVisible();
 
-        this.freezingIcon = new Image("towers\\towerIcons\\frostTowerIco.png", 250, 500);
+        this.freezingIcon = new Image("assets/towers/towerIcons/frostTowerIco.png", 750, 750);
         this.freezingIcon.makeVisible();
 
-        this.backGroundPoison = new Rectangle(200, 500);
+        this.backGroundPoison = new Rectangle(800, 750);
         this.backGroundPoison.changeSize(50, 50);
         this.backGroundPoison.changeColor("yellow");
         this.backGroundPoison.makeVisible();
 
-        this.poisonIcon = new Image("towers\\towerIcons\\poisonTowerIco.png", 300, 500);
+        this.poisonIcon = new Image("assets/towers/towerIcons/poisonTowerIco.png", 800, 750);
         this.poisonIcon.makeVisible();
     }
 
+    public void deselect() {
+        this.backGroundBalista.changeColor("yellow");
+        this.backGroundFire.changeColor("yellow");
+        this.backGroundFrost.changeColor("yellow");
+        this.backGroundPoison.changeColor("yellow");
+    }
+
     public TowerSelected clickTower(int y, int x) {
-        if (y < 500 || y > 550) {
+        if (y < 750 || y > 800) {
             return TowerSelected.MISSCLICK;
         }
 
         if (x > 150 && x < 200) {
+            this.backGroundBalista.changeColor("selectedYellow");
             return TowerSelected.BALISTA;
         } else if (x > 200 && x < 250) {
+            this.backGroundFire.changeColor("selectedYellow");
             return TowerSelected.FIRE;
         } else if (x > 250 && x < 300) {
+            this.backGroundFrost.changeColor("selectedYellow");
             return TowerSelected.FREEZING;
-        } else if (x > 300 && x < 350) {
+        } else if (x > 800 && x < 850) {
+            this.backGroundPoison.changeColor("selectedYellow");
             return TowerSelected.POISON;
         }
         return TowerSelected.MISSCLICK;
+    }
+
+    public void makeVisible() {
+        this.backGroundBalista.makeVisible();
+        this.backGroundPoison.makeVisible();
+        this.backGroundFire.makeVisible();
+        this.backGroundFrost.makeVisible();
+
+        this.poisonIcon.makeVisible();
+        this.fireIcon.makeVisible();
+        this.freezingIcon.makeVisible();
+        this.balistIcon.makeVisible();
     }
 }

@@ -22,8 +22,8 @@ public class Land implements Node, java.io.Serializable {
 
     public boolean setTower(Tower tower) {
         if (this.tower == null) {
-            //TODO invoke menu
             this.tower = tower;
+            this.tower.setTowerPos(this.y, this.x);
             return true;
         }
         return false;

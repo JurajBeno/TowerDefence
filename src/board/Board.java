@@ -1,9 +1,11 @@
 package board;
 
+import controls.TowerSelected;
 import controls.clickResults.ClickOnBoardResult;
 import controls.clickResults.MissClick;
 import controls.clickResults.PlaceTowerResult;
 import controls.clickResults.StartWaveResult;
+import towers.DefenceTower;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,7 +40,7 @@ public class Board implements java.io.Serializable {
         this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
     }
 
-    //TODO poriadne vytestovat obcas to spavne daky bs, nechapem preco, ale si to bude ten block L smerom dolu
+    //TODO poriadne vytestovat obcas to spavne daky bs, nechapem preco, ale asi to bude ten block L smerom dolu
     public void addBoardBlock() {
         this.discardGenNewButton();
         BoardBlock last = this.blocks.get(this.blocks.size() - 1);
@@ -77,5 +79,14 @@ public class Board implements java.io.Serializable {
         }
 
         return new MissClick();
+    }
+
+    public boolean placeTower(DefenceTower tower, int y, int x) {
+        for (BoardBlock block : this.blocks) {
+            if (block.placeTower(tower, y, x)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -7,11 +7,16 @@ public class Tower implements java.io.Serializable {
     private int yPos;
     private String name;
     private Image img;
-    public Tower(int xPos, int yPos, String name, String imgPath) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    private String imgPath;
+    public Tower(String name, String imgPath) {
         this.name = name;
-        this.img = new Image(imgPath, xPos, yPos - 32);
+        this.imgPath = imgPath;
+    }
+
+    public void setTowerPos(int y, int x) {
+        this.xPos = x;
+        this.yPos = y;
+        this.img = new Image(this.imgPath, x, y - 32);
         this.img.makeVisible();
     }
 

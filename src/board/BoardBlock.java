@@ -1,5 +1,7 @@
 package board;
 
+import controls.TowerSelected;
+import towers.DefenceTower;
 import towers.Tower;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class BoardBlock implements java.io.Serializable {
         this.buildPath();
         Collections.reverse(this.path);
         Land midLand = (Land)this.nodes[5][5];
-        midLand.setTower(new Tower(this.nodeSize * 4 * this.y, this.nodeSize * 4 * this.x, "Base", "assets\\towers\\base.png"));
+        midLand.setTower(new Tower( "Base", "assets\\towers\\base.png"));
     }
 
     public ArrayList<Road> getPathOnBlock() {
@@ -153,5 +155,19 @@ public class BoardBlock implements java.io.Serializable {
 
     public int getY() {
         return this.y;
+    }
+
+    public boolean placeTower(DefenceTower tower, int y, int x) {
+        if (y >= this.y && y <= this.y + 9 * this.nodeSize &&
+                x >= this.x && x <= this.x + 9 * this.nodeSize) {
+            int posInBlockX = Math.abs(x - this.x) / 64;
+            int posInBlockY = Math.abs(y - this.y) / 64;
+            Node node = this.nodes[posInBlockY][posInBlockX];
+            if (node instanceof Land land) {
+                land.setTower(tower);
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -2,8 +2,10 @@ package mainPackage;
 
 
 import board.Board;
+import controls.TowerSelected;
 import controls.clickResults.ClickOnBoardResult;
 import emenies.Wave;
+import towers.DefenceTower;
 
 import java.util.Random;
 
@@ -58,5 +60,9 @@ public class Game implements java.io.Serializable {
         if (this.wave != null) {
             this.wave.move(y, x);
         }
+    }
+
+    public void placeTower(DefenceTower tower, int y, int x) {
+        this.board.placeTower(tower, y, x);
     }
 }

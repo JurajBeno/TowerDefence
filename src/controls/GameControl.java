@@ -4,6 +4,11 @@ import controls.clickResults.ClickOnBoardResult;
 import controls.clickResults.StartWaveResult;
 import fri.shapesge.Manager;
 import mainPackage.Game;
+import towers.BalistaTower;
+import towers.DefenceTower;
+import towers.FireTower;
+import towers.FreezingTower;
+import towers.PoisonTower;
 import window.StartMenuWindow;
 import window.StartMenuOption;
 
@@ -20,7 +25,10 @@ public class GameControl implements java.io.Serializable {
     private Game game;
     private final StartMenuWindow startGameWindow;
     private final Random random;
+    private final UserInterfaceMenu uim;
     private int cameraSpeed;
+    private boolean placingTower;
+    private DefenceTower towerToPlace;
 
     public GameControl(Random random) {
         this.random = random;
@@ -29,7 +37,8 @@ public class GameControl implements java.io.Serializable {
         this.startGameWindow = new StartMenuWindow();
         this.game = null;
         this.cameraSpeed = 10;
-
+        this.uim = new UserInterfaceMenu(100);
+        this.placingTower = false;
     }
 
     public void setCameraSpeed(int speed) {
@@ -37,6 +46,12 @@ public class GameControl implements java.io.Serializable {
     }
 
     public void clickOnPosition(int x, int y) {
+        if (this.placingTower) {
+            this.game.placeTower(this.towerToPlace, y, x);
+            this.placingTower = false;
+            this.towerToPlace = null;
+        }
+
         if (this.startGameWindow.isVisible() && this.startGameWindow.isClickedOn(y, x)) {
             StartMenuOption option = this.startGameWindow.click(y, x);
             if (option != StartMenuOption.MISSCLICK) {
@@ -46,7 +61,24 @@ public class GameControl implements java.io.Serializable {
             ClickOnBoardResult clickResult = this.game.click(y, x);
             if (clickResult instanceof StartWaveResult startWave) {
                 this.game.startWave();
+                return;
             }
+        }
+        TowerSelected towerSelected = this.uim.click(y, x);
+        if (towerSelected == TowerSelected.MISSCLICK) {
+            return;
+        } else {
+            this.chooseTowerToPlace(towerSelected);
+        }
+    }
+
+    private void chooseTowerToPlace(TowerSelected towerSelected) {
+        switch (towerSelected) {
+            case POISON -> this.towerToPlace = new PoisonTower(0,0);
+            case FREEZING -> this.towerToPlace = new FreezingTower(0,0);
+            case FIRE -> this.towerToPlace = new FireTower(0,0);
+            case BALISTA -> this.towerToPlace = new BalistaTower(0,0);
+            default -> this.towerToPlace = null;
         }
     }
 

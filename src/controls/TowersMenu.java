@@ -59,13 +59,13 @@ public class TowersMenu {
             return TowerSelected.MISSCLICK;
         }
 
-        if (x > 150 && x < 200) {
+        if (x > 650 && x < 700) {
             this.backGroundBalista.changeColor("selectedYellow");
             return TowerSelected.BALISTA;
-        } else if (x > 200 && x < 250) {
+        } else if (x > 700 && x < 750) {
             this.backGroundFire.changeColor("selectedYellow");
             return TowerSelected.FIRE;
-        } else if (x > 250 && x < 300) {
+        } else if (x > 750 && x < 800) {
             this.backGroundFrost.changeColor("selectedYellow");
             return TowerSelected.FREEZING;
         } else if (x > 800 && x < 850) {

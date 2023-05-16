@@ -11,7 +11,7 @@ public class Wave {
     private final int y;
     private final int x;
     private int numberOfHeavy;
-    private final ArrayList<Attacker> attackers;
+    private final ArrayList<Enemy> attackers;
     private final ArrayList<Road> path;
     public Wave(double roundMultiplier, ArrayList<Road> path) {
         this.y = path.get(path.size() - 1).getY();
@@ -19,9 +19,6 @@ public class Wave {
         this.numberOfHeavy = (int)(roundMultiplier * 1);
         this.numberOfLight = (int)(roundMultiplier * 2);
         this.attackers = new ArrayList<>();
-        for (Road road : path) {
-            System.out.println(road.getY() + " " + road.getX());
-        }
         this.path = path;
     }
 
@@ -33,19 +30,19 @@ public class Wave {
     public void moveWave() {
         ArrayList<Integer> deleteIndexes = new ArrayList<>();
         int index = 0;
-        for (Attacker attacker : this.attackers) {
-            if (attacker.getIndexOfPath() < 0) {
-                attacker.giveDamage();
-            } else if (attacker.getHp() == 0) {
-                attacker.die();
+        for (Enemy enemy : this.attackers) {
+            if (enemy.getIndexOfPath() < 0) {
+                enemy.giveDamage();
+            } else if (enemy.getHp() == 0) {
+                enemy.die();
                 deleteIndexes.add(index);
-            } else {
-                System.out.println(attacker);
-                System.out.println((this.path.get(attacker.getIndexOfPath()).getY() + 16) + " " + (this.path.get(attacker.getIndexOfPath()).getX() + 16));
-                attacker.walk(
-                        this.path.get(attacker.getIndexOfPath()).getY() + 16,
-                        this.path.get(attacker.getIndexOfPath()).getX() + 16);
+            } else if (enemy.getMoveIndex() == 0) {
+                enemy.walk(
+                        this.path.get(enemy.getIndexOfPath()).getY() + 16,
+                        this.path.get(enemy.getIndexOfPath()).getX() + 16);
+                enemy.resetMoveIndex();
             }
+            enemy.decrementMoveIndex();
             index++;
         }
         for (Integer deleteIndex : deleteIndexes) {
@@ -54,23 +51,25 @@ public class Wave {
     }
 
     public void move(int y, int x) {
-        for (Attacker attacker : this.attackers) {
-            attacker.move(y, x);
+        for (Enemy enemy : this.attackers) {
+            enemy.move(y, x);
         }
     }
 
-
     public boolean spawnEnemy() {
         if (this.numberOfHeavy > 0) {
-            this.attackers.add(new Heavy(this.x + 16, this.y + 16, 100, this.path.size() - 1));
+            this.attackers.add(new Enemy("assets\\Enemies\\heavy.png",
+                    this.x + 16, this.y + 16, 100,
+                    this.path.size() - 1, 2, 8));
             this.numberOfHeavy--;
             return true;
         } else if (this.numberOfLight > 0) {
-            this.attackers.add(new Light(this.x + 16, this.y + 16, 35, this.path.size() - 1));
+            this.attackers.add(new Enemy("assets\\Enemies\\light.png",
+                    this.x + 16, this.y + 16, 35,
+                    this.path.size() - 1, 1, 2));
             this.numberOfLight--;
             return true;
         }
         return false;
     }
-
 }

@@ -2,6 +2,9 @@ package emenies;
 
 
 import fri.shapesge.Image;
+import towers.TowerEffect;
+
+import java.util.ArrayList;
 
 public class Enemy {
     private final int moveNumber;
@@ -12,6 +15,9 @@ public class Enemy {
     private final Image spirit;
     private int indexOfPath;
     private int moveIndex;
+    private ArrayList<TowerEffect> activeEffects;
+    private boolean isSloved;
+
 
     public Enemy(String imgPath, int x, int y, int hp,
                  int lastIndexOfPath, int moveNumber, int damage) {
@@ -24,6 +30,31 @@ public class Enemy {
         this.indexOfPath = lastIndexOfPath;
         this.moveNumber = moveNumber;
         this.moveIndex = moveNumber;
+        this.activeEffects = new ArrayList<>();
+    }
+
+    public void addTowerEffects(ArrayList<TowerEffect> effects) {
+        effects.removeIf(this.activeEffects::contains);
+        this.activeEffects.addAll(effects);
+    }
+
+    public void dealWithEffects() {
+        ArrayList<Integer> allIndexes = new ArrayList<>();
+        int deleteOnIndex = 0;
+        for (TowerEffect activeEffect : this.activeEffects) {
+            activeEffect.decrementEfectTicks();
+            this.hpBar.lowerHp(activeEffect.getDamage());
+            if (!this.isSloved) {
+                this.moveIndex += activeEffect.getMoventSlowedTicks();
+                this.isSloved = true;
+            }
+            if (activeEffect.getEfectTicks() <= 0) {
+                allIndexes.add(deleteOnIndex);
+            }
+        }
+        for (Integer index : allIndexes) {
+            this.activeEffects.remove((int)index);
+        }
     }
 
 
@@ -31,7 +62,7 @@ public class Enemy {
         return this.hpBar.getHp();
     }
 
-    public int giveDamage() {
+    public int getDamage() {
         return this.damage;
     }
 
@@ -59,12 +90,12 @@ public class Enemy {
 
     public void die() {
         this.spirit.makeInvisible();
+        this.hpBar.hide();
     }
 
     public int getIndexOfPath() {
         return this.indexOfPath;
     }
-
 
     public int getX() {
         return this.x;
@@ -84,9 +115,5 @@ public class Enemy {
 
     public int getMoveIndex() {
         return this.moveIndex;
-    }
-
-    public void getDamage(int damage) {
-        this.hpBar.damaged(damage);
     }
 }

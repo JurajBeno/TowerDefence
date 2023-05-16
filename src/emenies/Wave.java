@@ -1,6 +1,7 @@
 package emenies;
 
 import board.Road;
+import mainPackage.Game;
 
 import java.util.ArrayList;
 
@@ -13,13 +14,15 @@ public class Wave {
     private int numberOfHeavy;
     private final ArrayList<Enemy> attackers;
     private final ArrayList<Road> path;
-    public Wave(double roundMultiplier, ArrayList<Road> path) {
+    private final Game parent;
+    public Wave(double roundMultiplier, ArrayList<Road> path, Game parent) {
         this.y = path.get(path.size() - 1).getY();
         this.x = path.get(path.size() - 1).getX();
         this.numberOfHeavy = (int)(roundMultiplier * 1);
         this.numberOfLight = (int)(roundMultiplier * 2);
         this.attackers = new ArrayList<>();
         this.path = path;
+        this.parent = parent;
     }
 
     public int getNumberOfAttackers() {
@@ -28,24 +31,28 @@ public class Wave {
 
     //TODO FIX THAT ENDING OF THE PATH
     public void moveWave() {
-        ArrayList<Integer> deleteIndexes = new ArrayList<>();
+        ArrayList<Integer> deleteOnIndexes = new ArrayList<>();
         int index = 0;
         for (Enemy enemy : this.attackers) {
             if (enemy.getIndexOfPath() < 0) {
-                enemy.giveDamage();
+                this.parent.hitMainTower(enemy.getDamage());
+                enemy.die();
+                deleteOnIndexes.add(index);
             } else if (enemy.getHp() == 0) {
                 enemy.die();
-                deleteIndexes.add(index);
+                deleteOnIndexes.add(index);
             } else if (enemy.getMoveIndex() == 0) {
                 enemy.walk(
                         this.path.get(enemy.getIndexOfPath()).getY() + 16,
                         this.path.get(enemy.getIndexOfPath()).getX() + 16);
                 enemy.resetMoveIndex();
             }
+            enemy.dealWithEffects();
+            enemy.addTowerEffects(this.parent.getEfectFromTower(enemy.getX(), enemy.getY()));
             enemy.decrementMoveIndex();
             index++;
         }
-        for (Integer deleteIndex : deleteIndexes) {
+        for (Integer deleteIndex : deleteOnIndexes) {
             this.attackers.remove((int)deleteIndex);
         }
     }

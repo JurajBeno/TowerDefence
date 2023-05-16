@@ -76,6 +76,16 @@ public class TowersMenu {
     }
 
     public void makeVisible() {
+        this.backGroundBalista.makeInvisible();
+        this.backGroundPoison.makeInvisible();
+        this.backGroundFire.makeInvisible();
+        this.backGroundFrost.makeInvisible();
+
+        this.poisonIcon.makeInvisible();
+        this.fireIcon.makeInvisible();
+        this.freezingIcon.makeInvisible();
+        this.balistIcon.makeInvisible();
+
         this.backGroundBalista.makeVisible();
         this.backGroundPoison.makeVisible();
         this.backGroundFire.makeVisible();

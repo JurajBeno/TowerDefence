@@ -1,12 +1,12 @@
 package towers;
 
 public class PoisonTower extends DefenceTower implements java.io.Serializable {
-    public PoisonTower(int xPos, int yPos) {
-        super("Poison tower", "towers//Poison.png", 10, 5);
+    public PoisonTower() {
+        super("Poison tower", "assets\\towers\\poison.png", 10, 5);
     }
 
     @Override
-    void giveDamage() {
-        //TODO
+    public TowerEffect getAttackEffect() {
+        return TowerEffect.POISSON;
     }
 }

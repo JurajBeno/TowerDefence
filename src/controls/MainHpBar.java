@@ -26,6 +26,7 @@ public class MainHpBar {
 
     public void updateBar(int howMuch) {
         this.hp -= howMuch;
+        this.hpBar.changeSize(46, this.hp * 496 / 100);
     }
 
     public void resetBar() {

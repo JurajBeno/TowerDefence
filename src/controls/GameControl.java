@@ -1,7 +1,6 @@
 package controls;
 
 import controls.clickResults.ClickOnBoardResult;
-import controls.clickResults.MissClick;
 import controls.clickResults.StartWaveResult;
 import fri.shapesge.Manager;
 import mainPackage.Game;
@@ -65,8 +64,8 @@ public class GameControl implements java.io.Serializable {
         } else {
             ClickOnBoardResult clickResult = this.game.click(y, x);
             if (clickResult instanceof StartWaveResult startWave) {
-                this.uim.makeVisible();
                 this.game.startWave();
+                this.uim.makeVisible();
                 return;
             }
         }
@@ -81,10 +80,10 @@ public class GameControl implements java.io.Serializable {
 
     private void chooseTowerToPlace(TowerSelected towerSelected) {
         switch (towerSelected) {
-            case POISON -> this.towerToPlace = new PoisonTower(0,0);
-            case FREEZING -> this.towerToPlace = new FreezingTower(0,0);
-            case FIRE -> this.towerToPlace = new FireTower(0,0);
-            case BALISTA -> this.towerToPlace = new BalistaTower(0,0);
+            case POISON -> this.towerToPlace = new PoisonTower();
+            case FREEZING -> this.towerToPlace = new FreezingTower();
+            case FIRE -> this.towerToPlace = new FireTower();
+            case BALISTA -> this.towerToPlace = new BalistaTower();
             default -> this.towerToPlace = null;
         }
     }
@@ -107,7 +106,7 @@ public class GameControl implements java.io.Serializable {
     private void handleMenuChoice(StartMenuOption option) {
         switch (option) {
             case STARTGAME -> {
-                this.game = new Game(this.random);
+                this.game = new Game(this.random, this);
                 this.startGameWindow.setInvisible();
                 this.uim = new UserInterfaceMenu(100);
             }
@@ -172,5 +171,9 @@ public class GameControl implements java.io.Serializable {
         if (this.game != null) {
             this.game.move(0, this.cameraSpeed);
         }
+    }
+
+    public void decreaseMainTowerHp(int damage) {
+        this.uim.updateHpBar(damage);
     }
 }

@@ -7,6 +7,7 @@ public class HpBar implements java.io.Serializable {
     private Rectangle outer;
     private Rectangle inner;
 
+
     public HpBar(int x, int y, int hp) {
         this.outer = new Rectangle(x, y - 5);
         this.outer.changeSize(15, 4);
@@ -31,7 +32,7 @@ public class HpBar implements java.io.Serializable {
         this.inner.makeInvisible();
     }
 
-    public void damaged(int damage)  {
+    public void lowerHp(int damage) {
         this.hp -= damage;
     }
 

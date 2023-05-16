@@ -2,11 +2,11 @@ package towers;
 
 public class FireTower extends DefenceTower implements java.io.Serializable {
     public FireTower() {
-        super("Fire tower", "assets\\towers\\fire.png", 8, 4);
+        super("Fire tower", "assets\\towers\\fire.png", 8, 10);
     }
 
     @Override
-    public TowerEffect getAttackEffect() {
+    public TowerEffect getAttackEffect(int x, int y) {
         return TowerEffect.FIRE;
     }
 }

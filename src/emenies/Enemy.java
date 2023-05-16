@@ -39,6 +39,10 @@ public class Enemy {
     }
 
     public void dealWithEffects() {
+        if (this.activeEffects.size() == 0) {
+            this.isSloved = false;
+        }
+
         ArrayList<Integer> allIndexes = new ArrayList<>();
         int deleteOnIndex = 0;
         for (TowerEffect activeEffect : this.activeEffects) {

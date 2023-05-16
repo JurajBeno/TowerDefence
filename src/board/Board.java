@@ -40,12 +40,16 @@ public class Board implements java.io.Serializable {
         this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
     }
 
-    //TODO poriadne vytestovat obcas to spavne daky bs, nechapem preco, ale asi to bude ten block L smerom dolu
+    //TODO fix urcivanie orientacie, potom by generovanie cesty malo fungovat!!!!!!
     public void addBoardBlock() {
         this.discardGenNewButton();
+        System.out.println(this.blocks.size());
         BoardBlock last = this.blocks.get(this.blocks.size() - 1);
-        int y = last.getY() + last.getOrientation().getX() * 9 * 64;
-        int x = last.getX() + last.getOrientation().getY() * 9 * 64;
+        System.out.println(last.getOrientation());
+        int y = last.getY() + last.getOrientation().getY() * 9 * 64;
+        int x = last.getX() + last.getOrientation().getX() * 9 * 64;
+
+        System.out.println(y + " " + x);
         this.blocks.add(new BoardBlock(y, x, last.getTemplate(), last.getOrientation(), this.random));
     }
 

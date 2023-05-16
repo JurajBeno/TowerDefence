@@ -18,5 +18,5 @@ public abstract class DefenceTower extends Tower {
         return this.range;
     }
 
-    public abstract TowerEffect getAttackEffect();
+    public abstract TowerEffect getAttackEffect(int x, int y);
 }

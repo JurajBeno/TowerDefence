@@ -18,7 +18,7 @@ public class Wave {
     public Wave(double roundMultiplier, ArrayList<Road> path, Game parent) {
         this.y = path.get(path.size() - 1).getY();
         this.x = path.get(path.size() - 1).getX();
-        this.numberOfHeavy = (int)(roundMultiplier * 1);
+        this.numberOfHeavy = (int)(roundMultiplier * 0);
         this.numberOfLight = (int)(roundMultiplier * 2);
         this.attackers = new ArrayList<>();
         this.path = path;
@@ -29,7 +29,6 @@ public class Wave {
         return this.attackers.size();
     }
 
-    //TODO FIX THAT ENDING OF THE PATH
     public void moveWave() {
         ArrayList<Integer> deleteOnIndexes = new ArrayList<>();
         int index = 0;
@@ -38,7 +37,7 @@ public class Wave {
                 this.parent.hitMainTower(enemy.getDamage());
                 enemy.die();
                 deleteOnIndexes.add(index);
-            } else if (enemy.getHp() == 0) {
+            } else if (enemy.getHp() <= 0) {
                 enemy.die();
                 deleteOnIndexes.add(index);
             } else if (enemy.getMoveIndex() == 0) {
@@ -47,12 +46,13 @@ public class Wave {
                         this.path.get(enemy.getIndexOfPath()).getX() + 16);
                 enemy.resetMoveIndex();
             }
-            enemy.dealWithEffects();
-            enemy.addTowerEffects(this.parent.getEfectFromTower(enemy.getX(), enemy.getY()));
             enemy.decrementMoveIndex();
+            enemy.addTowerEffects(this.parent.getEfectFromTower(enemy.getX(), enemy.getY()));
+            enemy.dealWithEffects();
             index++;
         }
         for (Integer deleteIndex : deleteOnIndexes) {
+
             this.attackers.remove((int)deleteIndex);
         }
     }

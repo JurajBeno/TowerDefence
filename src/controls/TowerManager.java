@@ -20,7 +20,7 @@ public class TowerManager {
         for (DefenceTower defenceTower : this.defenceTowers) {
             if (Math.abs(defenceTower.getXPos() - x) < defenceTower.getRange() &&
                     Math.abs(defenceTower.getYPos() - y) < defenceTower.getRange()) {
-                effects.add(defenceTower.getAttackEffect());
+                effects.add(defenceTower.getAttackEffect(x, y));
             }
         }
         return effects;

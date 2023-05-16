@@ -69,8 +69,9 @@ public class GameControl implements java.io.Serializable {
                 return;
             }
         }
-
-        this.uim.deselect();
+        if (this.uim != null) {
+            this.uim.deselect();
+        }
         TowerSelected towerSelected = this.uim.click(y, x);
         if (towerSelected != TowerSelected.MISSCLICK) {
             this.placingTower = true;
@@ -87,12 +88,6 @@ public class GameControl implements java.io.Serializable {
             default -> this.towerToPlace = null;
         }
     }
-
-
-    public void tik() {
-
-    }
-
 
     public void spawnEnemy() {
         if (this.game != null) {

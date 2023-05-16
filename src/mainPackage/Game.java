@@ -48,6 +48,7 @@ public class Game implements java.io.Serializable {
             return;
         }
         if (this.wave.getNumberOfAttackers() == 0 && !this.spawning) {
+            this.board.setUpGenNewButton();
             this.wave = null;
         } else {
             this.wave.moveWave();

@@ -41,6 +41,7 @@ public class GenerateNewBlockButton {
 
     public void makeInvisible() {
         this.rectangle.makeInvisible();
+        this.textField.makeInvisible();
         this.isVisible = false;
     }
 

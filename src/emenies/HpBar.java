@@ -4,6 +4,7 @@ import fri.shapesge.Rectangle;
 
 public class HpBar implements java.io.Serializable {
     private int hp;
+    private int maxHp;
     private Rectangle outer;
     private Rectangle inner;
 
@@ -18,6 +19,7 @@ public class HpBar implements java.io.Serializable {
         this.inner.changeSize(13, 2);
         this.inner.makeVisible();
         this.hp = hp;
+        this.maxHp = hp;
     }
 
     public void move(int y, int x) {
@@ -34,6 +36,8 @@ public class HpBar implements java.io.Serializable {
 
     public void lowerHp(int damage) {
         this.hp -= damage;
+        System.out.println(this.hp);
+        this.inner.changeSize( this.hp * 13 / this.maxHp, 2);
     }
 
     public int getHp() {

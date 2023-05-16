@@ -1,9 +1,9 @@
 package towers;
 
 public enum TowerEffect {
-    FIRE(0, 3, 3),
-    POISSON(1, 2, 2),
-    BLEED(0, 2, 4),
+    FIRE(0, 5, 3),
+    POISSON(1, 10, 2),
+    BLEED(0, 15, 4),
     FREEZE(3, 0, 3);
 
     private int moventSlowedTicks;

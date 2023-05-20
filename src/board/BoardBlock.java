@@ -1,11 +1,11 @@
 package board;
 
-import controls.TowerSelected;
 import towers.DefenceTower;
 import towers.Tower;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class BoardBlock implements java.io.Serializable {
@@ -27,6 +27,7 @@ public class BoardBlock implements java.io.Serializable {
         this.path = new ArrayList<>();
         this.createNodes();
         this.buildPath();
+        Collections.reverse(this.path);
     }
 
     public BoardBlock(int y, int x, Random random) {
@@ -45,7 +46,7 @@ public class BoardBlock implements java.io.Serializable {
     }
 
     public ArrayList<Road> getPathOnBlock() {
-        return this.path;
+        return new ArrayList<>(this.path);
     }
 
 
@@ -54,7 +55,7 @@ public class BoardBlock implements java.io.Serializable {
             x >= this.x && x <= this.x + 9 * this.nodeSize) {
             int posInBlockX = Math.abs(x - this.x) / 64;
             int posInBlockY = Math.abs(y - this.y) / 64;
-            System.out.println(this.nodes[posInBlockY][posInBlockX].getX());
+//            System.out.println(this.nodes[posInBlockY][posInBlockX].getX());
         }
         return false;
     }
@@ -63,6 +64,7 @@ public class BoardBlock implements java.io.Serializable {
         var temp =  prewTemplate.getNextPossibleTemplates(prewOrientarion);
         this.template = temp.get(this.random.nextInt(temp.size() - 1));
         this.orientarion = this.template.getOtherOrientation(prewOrientarion);
+        System.out.println(this.orientarion);
     }
 
 
@@ -110,9 +112,7 @@ public class BoardBlock implements java.io.Serializable {
                 yPos = 8;
             }
         }
-
         this.buildPathRecurs(start, xPos, yPos);
-
     }
 
     private void buildPathRecurs(Node start, int x, int y) {

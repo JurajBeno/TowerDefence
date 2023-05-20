@@ -1,6 +1,5 @@
 package board;
 
-import controls.TowerSelected;
 import controls.clickResults.ClickOnBoardResult;
 import controls.clickResults.MissClick;
 import controls.clickResults.PlaceTowerResult;
@@ -40,12 +39,9 @@ public class Board implements java.io.Serializable {
         this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
     }
 
-    //TODO fix urcivanie orientacie, potom by generovanie cesty malo fungovat!!!!!!
     public void addBoardBlock() {
         this.discardGenNewButton();
-        System.out.println(this.blocks.size());
         BoardBlock last = this.blocks.get(this.blocks.size() - 1);
-        System.out.println(last.getOrientation());
         int y = last.getY() + last.getOrientation().getY() * 9 * 64;
         int x = last.getX() + last.getOrientation().getX() * 9 * 64;
 
@@ -61,8 +57,6 @@ public class Board implements java.io.Serializable {
     }
 
     public ClickOnBoardResult click(int y, int x) {
-
-
 
         for (BoardBlock block : this.blocks) {
             if (block.click(y, x)) {

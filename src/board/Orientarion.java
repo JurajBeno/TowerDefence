@@ -1,8 +1,11 @@
 package board;
 
+/**
+ * Enumerator that holds orientations to determine positions of board blocks
+ */
 public enum Orientarion {
-    NORTH(1, 0),
-    SOUTH(-1, 0),
+    NORTH(-1, 0),
+    SOUTH(1, 0),
     EAST(0, 1),
     WEST(0, -1);
 
@@ -24,6 +27,9 @@ public enum Orientarion {
         return this.y;
     }
 
+    /**
+     * @return "geographycally" oposite direction of this orientation
+     */
     public Orientarion getOposite() {
         if (this == WEST) {
             return EAST;

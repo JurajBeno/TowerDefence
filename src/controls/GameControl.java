@@ -52,6 +52,7 @@ public class GameControl implements java.io.Serializable {
                 this.uim.deselect();
                 this.placingTower = false;
                 this.towerToPlace = null;
+
             }
         }
 
@@ -81,11 +82,21 @@ public class GameControl implements java.io.Serializable {
 
     private void chooseTowerToPlace(TowerSelected towerSelected) {
         switch (towerSelected) {
-            case POISON -> this.towerToPlace = new PoisonTower();
-            case FREEZING -> this.towerToPlace = new FreezingTower();
-            case FIRE -> this.towerToPlace = new FireTower();
-            case BALISTA -> this.towerToPlace = new BalistaTower();
-            default -> this.towerToPlace = null;
+            case POISON -> {
+                this.towerToPlace = new PoisonTower();
+            }
+            case FREEZING -> {
+                this.towerToPlace = new FreezingTower();
+            }
+            case FIRE -> {
+                this.towerToPlace = new FireTower();
+            }
+            case BALISTA -> {
+                this.towerToPlace = new BalistaTower();
+            }
+            default -> {
+                this.towerToPlace = null;
+            }
         }
     }
 
@@ -147,24 +158,31 @@ public class GameControl implements java.io.Serializable {
     public void moveUp() {
         if (this.game != null) {
             this.game.move(this.cameraSpeed, 0);
+            this.uim.makeVisible();
         }
     }
 
     public void moveDown() {
         if (this.game != null) {
             this.game.move(-this.cameraSpeed, 0);
+            this.uim.makeVisible();
+
         }
     }
 
     public void moveRight() {
         if (this.game != null) {
             this.game.move(0, -this.cameraSpeed);
+            this.uim.makeVisible();
+
         }
     }
 
     public void moveLeft() {
         if (this.game != null) {
             this.game.move(0, this.cameraSpeed);
+            this.uim.makeVisible();
+
         }
     }
 

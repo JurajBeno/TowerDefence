@@ -6,7 +6,6 @@ import mainPackage.Game;
 import java.util.ArrayList;
 
 
-//TODO fix so enemies walk on path
 public class Wave {
     private int numberOfLight;
     private final int y;
@@ -52,8 +51,9 @@ public class Wave {
             index++;
         }
         for (Integer deleteIndex : deleteOnIndexes) {
-
-            this.attackers.remove((int)deleteIndex);
+            if (this.attackers.size() > 0) {
+                this.attackers.remove((int)deleteIndex);
+            }
         }
     }
 

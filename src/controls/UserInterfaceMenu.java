@@ -18,8 +18,8 @@ public class UserInterfaceMenu {
         this.hpBar.updateBar(howMuch);
     }
 
-    public void resetHpBar() {
-        this.hpBar.resetBar();
+    public void resetHp() {
+        this.hpBar.resetHp();
     }
 
     public void deselect() {

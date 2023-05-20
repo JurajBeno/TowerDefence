@@ -3,10 +3,10 @@ package controls;
 import fri.shapesge.Rectangle;
 
 public class MainHpBar {
-    private Rectangle backRound;
-    private Rectangle hpBar;
+    private final Rectangle backRound;
+    private final Rectangle hpBar;
     private int hp;
-    private int originalHp;
+    private final int originalHp;
     public MainHpBar(int hp) {
         this.backRound = new Rectangle(50, 250);
         this.backRound.changeColor("black");
@@ -29,11 +29,14 @@ public class MainHpBar {
         this.hpBar.changeSize(46, this.hp * 496 / 100);
     }
 
-    public void resetBar() {
+    public void resetHp() {
         this.hp = this.originalHp;
     }
 
     public void makeVisible() {
+        this.backRound.makeInvisible();
+        this.hpBar.makeInvisible();
+
         this.backRound.makeVisible();
         this.hpBar.makeVisible();
     }

@@ -1,15 +1,16 @@
-package window;
-//TODO center it, change TEXT FONT
+package controls.windows;
 import fri.shapesge.Image;
 import fri.shapesge.Rectangle;
 import fri.shapesge.Text;
 
+/**
+ * dispays and manages start menu
+ */
 public class StartMenuWindow {
     private final Rectangle backRound;
     private final Image firstButton;
     private final Text  firstText;
-    private final Image secondButton;
-    private final Text secondText;
+
     private final Image exitButton;
     private boolean isVisible;
 
@@ -25,12 +26,17 @@ public class StartMenuWindow {
 
         this.firstButton = new Image("assets\\startWindow\\start.png", 50, 60);
         this.firstText = new Text("NEW GAME", 50, 110);
-        this.secondButton = new Image("assets\\startWindow\\load.png", 50, 110);
-        this.secondText = new Text("RESUME\nPLAYED GAME", 50, 160);
+
         this.exitButton = new Image("assets\\startWindow\\exit.png", 50 , 200);
         this.setVisible();
     }
 
+    /**
+     *
+     * @param y position
+     * @param x position
+     * @return what button was clicked from x and y positions
+     */
     public StartMenuOption click(int y, int x) {
         if (y > 60 && y < 95 && x > 50 && x < 150) {
             return StartMenuOption.STARTGAME;
@@ -42,35 +48,43 @@ public class StartMenuWindow {
         return StartMenuOption.MISSCLICK;
     }
 
+    /**
+     * @param y position
+     * @param x position
+     * @return boolean value true if y and x are in bounds of menu
+     */
     public boolean isClickedOn(int y, int x) {
         return y > this.yPos && y < (this.yPos + this.height)
                 && x > this.xPos && x < (this.xPos + this.width);
     }
 
-    public void informUnsuccesfulLoad() {
-        this.secondText.changeText("GAME CAN'T BE\nLOADED CREATE\nNEW GAME");
-    }
-
+    /**
+     * makes whole menu visible
+     */
     public void setVisible() {
         this.backRound.makeVisible();
         this.firstButton.makeVisible();
         this.firstText.makeVisible();
-        this.secondButton.makeVisible();
-        this.secondText.makeVisible();
+
         this.exitButton.makeVisible();
         this.isVisible = true;
     }
 
+    /**
+     * hides whole menu
+     */
     public void setInvisible() {
         this.backRound.makeInvisible();
         this.firstButton.makeInvisible();
         this.firstText.makeInvisible();
-        this.secondButton.makeInvisible();
-        this.secondText.makeInvisible();
+
         this.exitButton.makeInvisible();
         this.isVisible = false;
     }
 
+    /**
+     * @return boolean value true if menu is visible
+     */
     public boolean isVisible() {
         return this.isVisible;
     }

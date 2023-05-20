@@ -1,7 +1,9 @@
 package controls;
 
-import controls.clickResults.ClickOnBoardResult;
-import controls.clickResults.StartWaveResult;
+import controls.userInterface.TowerSelected;
+import controls.userInterface.UserInterfaceMenu;
+import controls.windows.InGameMenu;
+import controls.windows.InGameMenuClickResult;
 import fri.shapesge.Manager;
 import mainPackage.Game;
 import towers.BalistaTower;
@@ -9,19 +11,16 @@ import towers.DefenceTower;
 import towers.FireTower;
 import towers.FreezingTower;
 import towers.PoisonTower;
-import window.StartMenuWindow;
-import window.StartMenuOption;
+import controls.windows.StartMenuWindow;
+import controls.windows.StartMenuOption;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Random;
 
-//TODO think out how will saving and loading games work// probably won't
 
-public class GameControl implements java.io.Serializable {
+/**
+ * Class handles communication between user and game.
+ */
+public class GameControl {
     private boolean gameIsLive;
     private Game game;
     private final StartMenuWindow startGameWindow;
@@ -31,6 +30,11 @@ public class GameControl implements java.io.Serializable {
     private boolean placingTower;
     private DefenceTower towerToPlace;
     private InGameMenu igm;
+
+    /**
+     * creates instance of game control
+     * @param random
+     */
     public GameControl(Random random) {
         this.gameIsLive = false;
         this.random = random;
@@ -42,6 +46,9 @@ public class GameControl implements java.io.Serializable {
         this.placingTower = false;
     }
 
+    /**
+     * Stops running game.
+     */
     public void cancel() {
         if (this.gameIsLive) {
             this.gameIsLive = false;
@@ -54,7 +61,11 @@ public class GameControl implements java.io.Serializable {
     }
 
 
-    //TODO remove redundant logic: ClickOnBoardResult interface instances turn into enum ClickOnBoardResult
+    /**
+     * Handles mouse clicks.
+     * @param x
+     * @param y
+     */
     public void clickOnPosition(int x, int y) {
         if (this.igm != null) {
             InGameMenuClickResult res = this.igm.click(x, y);
@@ -92,7 +103,7 @@ public class GameControl implements java.io.Serializable {
             }
         } else {
             ClickOnBoardResult clickResult = this.game.click(y, x);
-            if (clickResult instanceof StartWaveResult startWave) {
+            if (clickResult == ClickOnBoardResult.START_WAWE) {
                 this.game.startWave();
                 this.uim.makeVisible();
                 return;
@@ -128,9 +139,12 @@ public class GameControl implements java.io.Serializable {
         }
     }
 
+    /**
+     * handles tik action
+     */
     public void moveGame() {
         if (this.gameIsLive) {
-            this.game.moveWave();
+            this.game.tikWave();
             if (this.game.getSpawning()) {
                 this.game.spawnEnemy();
             }
@@ -153,45 +167,13 @@ public class GameControl implements java.io.Serializable {
                 this.startGameWindow.setInvisible();
                 this.uim = new UserInterfaceMenu(100);
             }
-            case LOADGAME -> {
-                if (!this.loadGame()) {
-                    this.startGameWindow.informUnsuccesfulLoad();
-                } else {
-                    this.startGameWindow.setInvisible();
-                    this.uim = new UserInterfaceMenu(100);
-                }
-            }
             case EXIT -> System.exit(0);
         }
     }
 
-    private boolean saveGame() {
-        try {
-            //todo will be single save game, we'll see
-            FileOutputStream fos = new FileOutputStream("gameSaves\\game.sav");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this.game);
-            oos.flush();
-            oos.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    private boolean loadGame() {
-        System.out.println("loading not yet added");
-        try {
-            FileInputStream fis = new FileInputStream("gameSaves\\game.sav");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            this.game = (Game)ois.readObject();
-            ois.close();
-            return true;
-        } catch (ClassNotFoundException | IOException e) {
-            return false;
-        }
-    }
-
+    /**
+     * moves camera up by camera speed value
+     */
     public void moveUp() {
         if (this.gameIsLive) {
             this.game.move(this.cameraSpeed, 0);
@@ -199,6 +181,9 @@ public class GameControl implements java.io.Serializable {
         }
     }
 
+    /**
+     * moves camera down by camera speed value
+     */
     public void moveDown() {
         if (this.gameIsLive) {
             this.game.move(-this.cameraSpeed, 0);
@@ -207,6 +192,9 @@ public class GameControl implements java.io.Serializable {
         }
     }
 
+    /**
+     * moves camera right by camera speed value
+     */
     public void moveRight() {
         if (this.gameIsLive) {
             this.game.move(0, -this.cameraSpeed);
@@ -215,6 +203,9 @@ public class GameControl implements java.io.Serializable {
         }
     }
 
+    /**
+     * moves camera left by camera speed value
+     */
     public void moveLeft() {
         if (this.gameIsLive) {
             this.game.move(0, this.cameraSpeed);

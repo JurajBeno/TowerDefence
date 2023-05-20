@@ -1,9 +1,12 @@
-package controls;
+package controls.windows;
 
 import fri.shapesge.Image;
 import fri.shapesge.Rectangle;
 import fri.shapesge.Text;
 
+/**
+ * Displays and check clicking of buttons in menu
+ */
 public class InGameMenu {
 
     private final Text message;
@@ -27,6 +30,9 @@ public class InGameMenu {
         this.restart.makeVisible();
     }
 
+    /**
+     * Hides all displayed elements
+     */
     public void makeInvisible() {
         this.backRound.makeInvisible();
         this.message.makeInvisible();
@@ -34,6 +40,12 @@ public class InGameMenu {
         this.restart.makeInvisible();
     }
 
+    /**
+     * handles clicking of buttons in menu
+     * @param x position
+     * @param y position
+     * @return result of clicking
+     */
     public InGameMenuClickResult click(int x, int y) {
         if (x > 660 && x < 750) {
             if (y > 600 && y < 635) {

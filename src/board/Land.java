@@ -1,25 +1,35 @@
 package board;
 
-import controls.clickResults.ClickOnBoardResult;
-import controls.clickResults.PlaceTowerResult;
+import controls.ClickOnBoardResult;
 import fri.shapesge.Image;
 import towers.Tower;
 
-public class Land implements Node, java.io.Serializable {
+/**
+ * class handles displaying and managing land
+ */
+public class Land implements Node {
     private int y;
     private int x;
     private final Image img;
     private Tower tower;
-    private final int height;
-    //todo height mechanic
-    public Land(int y, int x, int height) {
+
+    /**
+     * creates land node on y and x
+     * @param y position
+     * @param x position
+     */
+    public Land(int y, int x) {
         this.y = y;
         this.x = x;
         this.img = new Image(("assets\\Tiles\\miniLand0.png"), x, y);
         this.img.makeVisible();
-        this.height = height;
     }
 
+    /**
+     * if there is no tower on given place new is placed
+     * @param tower
+     * @return true if tower has been placed
+     */
     public boolean setTower(Tower tower) {
         if (this.tower == null) {
             this.tower = tower;
@@ -29,25 +39,29 @@ public class Land implements Node, java.io.Serializable {
         return false;
     }
 
-    public int getHeight() {
-        return this.height;
-    }
 
+    /**
+     * @return x position of land
+     */
     @Override
     public int getX() {
         return this.x;
     }
 
+    /**
+     * @return y position of land
+     */
     @Override
     public int getY() {
         return this.y;
     }
 
-    @Override
-    public ClickOnBoardResult clicked() {
-        return new PlaceTowerResult();
-    }
 
+    /**
+     * move tower and land by given y and x values
+     * @param y
+     * @param x
+     */
     @Override
     public void move(int y, int x) {
         this.x += x;
@@ -59,6 +73,9 @@ public class Land implements Node, java.io.Serializable {
         }
     }
 
+    /**
+     * hides tower and land
+     */
     @Override
     public void makeInvisible() {
         if (this.tower != null) {

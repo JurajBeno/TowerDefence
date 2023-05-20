@@ -17,12 +17,16 @@ public enum Orientarion {
         this.y = y;
         this.x = x;
     }
-
-
+    /**
+     * @return x orientation
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * @return y orientation
+     */
     public int getY() {
         return this.y;
     }

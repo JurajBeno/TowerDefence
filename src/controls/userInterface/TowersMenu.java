@@ -1,8 +1,12 @@
-package controls;
+package controls.userInterface;
 
+import controls.userInterface.TowerSelected;
 import fri.shapesge.Image;
 import fri.shapesge.Rectangle;
 
+/**
+ * Displays and controls all buttons so player can choose tower
+ */
 public class TowersMenu {
     private Image balistIcon;
     private Rectangle backGroundBalista;
@@ -13,6 +17,9 @@ public class TowersMenu {
     private Image poisonIcon;
     private Rectangle backGroundPoison;
 
+    /**
+     * creates tower menu
+     */
     public TowersMenu() {
         this.backGroundBalista = new Rectangle(650, 750);
         this.backGroundBalista.changeSize(50, 50);
@@ -47,6 +54,9 @@ public class TowersMenu {
         this.poisonIcon.makeVisible();
     }
 
+    /**
+     * deselects selected button
+     */
     public void deselect() {
         this.backGroundBalista.changeColor("yellow");
         this.backGroundFire.changeColor("yellow");
@@ -54,6 +64,9 @@ public class TowersMenu {
         this.backGroundPoison.changeColor("yellow");
     }
 
+    /**
+     * @return enum instance of which type of tower will be built
+     */
     public TowerSelected clickTower(int y, int x) {
         if (y < 750 || y > 800) {
             return TowerSelected.MISSCLICK;
@@ -75,6 +88,9 @@ public class TowersMenu {
         return TowerSelected.MISSCLICK;
     }
 
+    /**
+     * makes menu invisible
+     */
     public void makeInvisible() {
         this.backGroundBalista.makeInvisible();
         this.backGroundPoison.makeInvisible();
@@ -87,6 +103,9 @@ public class TowersMenu {
         this.balistIcon.makeInvisible();
     }
 
+    /**
+     * shows menu on top of display
+     */
     public void makeVisible() {
         this.makeInvisible();
         this.backGroundBalista.makeVisible();

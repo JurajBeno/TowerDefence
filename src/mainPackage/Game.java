@@ -3,7 +3,7 @@ package mainPackage;
 
 import board.Board;
 import controls.TowerManager;
-import controls.clickResults.ClickOnBoardResult;
+import controls.ClickOnBoardResult;
 import emenies.Wave;
 import towers.DefenceTower;
 import towers.MainTower;
@@ -12,13 +12,21 @@ import towers.TowerEffect;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game implements java.io.Serializable {
+/**
+ * class holds and manages all game actions and logic
+ */
+public class Game {
     private final Board board;
     private final Random random;
     private boolean spawning;
     private Wave wave;
     private int waveNumber;
     private TowerManager towerManager;
+
+    /**
+     * create game instance
+     * @param random to make randomness in game possible and consistent
+     */
     public Game(Random random) {
         this.random = random;
         MainTower base = new MainTower( "Base", "assets\\towers\\base.png", 5);
@@ -28,26 +36,44 @@ public class Game implements java.io.Serializable {
         this.towerManager = new TowerManager(base);
     }
 
+    /**
+     * makes invisible all displayed game elements
+     */
     public void makeInvisible() {
         this.board.makeInvisible();
         this.wave.makeInvisible();
     }
 
+    /**
+     * forwards every click to board
+     * @param y position
+     * @param x position
+     * @return result of clicking
+     */
     public ClickOnBoardResult click(int y, int x) {
         return this.board.click(y, x);
     }
 
+    /**
+     * @return if enemies are being spawned
+     */
     public boolean getSpawning() {
         return this.spawning;
     }
 
+    /**
+     * calls method to spawn enemy
+     */
     public void spawnEnemy() {
         if (!this.wave.spawnEnemy()) {
             this.spawning = false;
         }
     }
 
-    public void moveWave() {
+    /**
+     * decides if move wave or prepares for starting wave
+     */
+    public void tikWave() {
         if (this.wave == null) {
             return;
         }
@@ -55,14 +81,21 @@ public class Game implements java.io.Serializable {
             this.board.setUpGenNewButton();
             this.wave = null;
         } else {
-            this.wave.moveWave();
+            this.wave.tikWave();
         }
     }
 
+    /**
+     * damages main tower
+     * @param damage to decrease
+     */
     public void hitMainTower(int damage) {
         this.towerManager.decreaseHpOfMain(damage);
     }
 
+    /**
+     * initialize and starts wave
+     */
     public void startWave() {
         double multipier = 1 + 0.1 * this.waveNumber;
         var wholePath = this.board.getWholePath();
@@ -71,6 +104,12 @@ public class Game implements java.io.Serializable {
         this.waveNumber += 1;
     }
 
+    /**
+     * moves all displayed elements of game
+     * useful for camera movement
+     * @param y position
+     * @param x position
+     */
     public void move(int y, int x) {
         this.board.move(y, x);
         if (this.wave != null) {
@@ -78,21 +117,38 @@ public class Game implements java.io.Serializable {
         }
     }
 
+    /**
+     * calls method to place tower
+     * @param tower defence tower
+     * @param y position
+     * @param x position
+     */
     public void placeTower(DefenceTower tower, int y, int x) {
         if (this.board.placeTower(tower, y, x)) {
             this.towerManager.addTower(tower);
         }
     }
 
+    /**
+     * @return hp of main tower
+     */
     public int getMainHp() {
         return this.towerManager.getHpOfMain();
     }
 
+    /**
+     * @return maximum value of main hp
+     */
     public int getMaxMainHp() {
         return this.towerManager.getMaxMainHp();
     }
 
+    /**
+     * @param x position
+     * @param y position
+     * @return arrayList of effects from tower on give position
+     */
     public ArrayList<TowerEffect> getEfectFromTower(int x, int y) {
-        return  this.towerManager.attackIfCan(x, y);
+        return this.towerManager.attackIfCan(x, y);
     }
 }

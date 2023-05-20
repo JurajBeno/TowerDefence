@@ -1,7 +1,8 @@
 package controls;
 
-//TODO moznost vymenit toto za ClickResult/ClickOnBoardResult ak
-//ak nebude potreba prenasat nejake napr z PlaceTowerResult
+/**
+ * Enum hold responses from board when clicking on it
+ */
 public enum ClickOnBoardResult {
-    START_WAWE, PLACE_TOWER, MISS_CLICK
+    START_WAWE, MISS_CLICK
 }

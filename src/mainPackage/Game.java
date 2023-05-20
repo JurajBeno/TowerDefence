@@ -2,11 +2,11 @@ package mainPackage;
 
 
 import board.Board;
-import controls.GameControl;
 import controls.TowerManager;
 import controls.clickResults.ClickOnBoardResult;
 import emenies.Wave;
 import towers.DefenceTower;
+import towers.MainTower;
 import towers.TowerEffect;
 
 import java.util.ArrayList;
@@ -19,14 +19,18 @@ public class Game implements java.io.Serializable {
     private Wave wave;
     private int waveNumber;
     private TowerManager towerManager;
-    private GameControl parent;
-    public Game(Random random, GameControl parent) {
+    public Game(Random random) {
         this.random = random;
-        this.parent = parent;
-        this.board = new Board(this.random);
+        MainTower base = new MainTower( "Base", "assets\\towers\\base.png", 5);
+        this.board = new Board(this.random, base);
         this.spawning = false;
         this.waveNumber = 0;
-        this.towerManager = new TowerManager();
+        this.towerManager = new TowerManager(base);
+    }
+
+    public void makeInvisible() {
+        this.board.makeInvisible();
+        this.wave.makeInvisible();
     }
 
     public ClickOnBoardResult click(int y, int x) {
@@ -56,8 +60,7 @@ public class Game implements java.io.Serializable {
     }
 
     public void hitMainTower(int damage) {
-        //this.towerManager.hitMainTower(damage);
-        this.parent.decreaseMainTowerHp(damage);
+        this.towerManager.decreaseHpOfMain(damage);
     }
 
     public void startWave() {
@@ -79,6 +82,14 @@ public class Game implements java.io.Serializable {
         if (this.board.placeTower(tower, y, x)) {
             this.towerManager.addTower(tower);
         }
+    }
+
+    public int getMainHp() {
+        return this.towerManager.getHpOfMain();
+    }
+
+    public int getMaxMainHp() {
+        return this.towerManager.getMaxMainHp();
     }
 
     public ArrayList<TowerEffect> getEfectFromTower(int x, int y) {

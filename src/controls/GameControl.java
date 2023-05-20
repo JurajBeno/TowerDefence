@@ -19,18 +19,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Random;
 
-//TODO think out how will saving and loading games work
+//TODO think out how will saving and loading games work// probably won't
 
 public class GameControl implements java.io.Serializable {
+    private boolean gameIsLive;
     private Game game;
     private final StartMenuWindow startGameWindow;
     private final Random random;
     private UserInterfaceMenu uim;
-    private int cameraSpeed;
+    private final int cameraSpeed;
     private boolean placingTower;
     private DefenceTower towerToPlace;
-
+    private InGameMenu igm;
     public GameControl(Random random) {
+        this.gameIsLive = false;
         this.random = random;
         Manager manager = new Manager();
         manager.manageObject(this);
@@ -40,11 +42,37 @@ public class GameControl implements java.io.Serializable {
         this.placingTower = false;
     }
 
-    public void setCameraSpeed(int speed) {
-        this.cameraSpeed = speed;
+    public void cancel() {
+        if (this.gameIsLive) {
+            this.gameIsLive = false;
+            this.igm = new InGameMenu("Game paused, pres esc to continue");
+        } else {
+            this.gameIsLive = true;
+            this.igm.makeInvisible();
+            this.igm = null;
+        }
     }
 
+
+    //TODO remove redundant logic: ClickOnBoardResult interface instances turn into enum ClickOnBoardResult
     public void clickOnPosition(int x, int y) {
+        if (this.igm != null) {
+            InGameMenuClickResult res = this.igm.click(x, y);
+            if (res == InGameMenuClickResult.EXIT) {
+                System.exit(0);
+            } else if (res == InGameMenuClickResult.RESTART) {
+                this.igm.makeInvisible();
+                this.game.makeInvisible();
+                this.uim.makeInvisible();
+
+                this.game = new Game(this.random);
+                this.uim = new UserInterfaceMenu(5);
+                this.gameIsLive = true;
+            }
+            
+
+        }
+
         if (this.uim != null) {
             TowerSelected towerSelected = this.uim.click(y, x);
             if (this.placingTower && towerSelected == TowerSelected.MISSCLICK) {
@@ -100,19 +128,28 @@ public class GameControl implements java.io.Serializable {
         }
     }
 
-    public void spawnEnemy() {
-        if (this.game != null) {
+    public void moveGame() {
+        if (this.gameIsLive) {
             this.game.moveWave();
             if (this.game.getSpawning()) {
                 this.game.spawnEnemy();
             }
+
+            this.changeMainHpIndicator();
+
+            if (this.game.getMainHp() <= 0) {
+                this.gameIsLive = false;
+                this.igm = new InGameMenu("Game over");
+            }
+
         }
     }
 
     private void handleMenuChoice(StartMenuOption option) {
         switch (option) {
             case STARTGAME -> {
-                this.game = new Game(this.random, this);
+                this.game = new Game(this.random);
+                this.gameIsLive = true;
                 this.startGameWindow.setInvisible();
                 this.uim = new UserInterfaceMenu(100);
             }
@@ -156,14 +193,14 @@ public class GameControl implements java.io.Serializable {
     }
 
     public void moveUp() {
-        if (this.game != null) {
+        if (this.gameIsLive) {
             this.game.move(this.cameraSpeed, 0);
             this.uim.makeVisible();
         }
     }
 
     public void moveDown() {
-        if (this.game != null) {
+        if (this.gameIsLive) {
             this.game.move(-this.cameraSpeed, 0);
             this.uim.makeVisible();
 
@@ -171,7 +208,7 @@ public class GameControl implements java.io.Serializable {
     }
 
     public void moveRight() {
-        if (this.game != null) {
+        if (this.gameIsLive) {
             this.game.move(0, -this.cameraSpeed);
             this.uim.makeVisible();
 
@@ -179,14 +216,16 @@ public class GameControl implements java.io.Serializable {
     }
 
     public void moveLeft() {
-        if (this.game != null) {
+        if (this.gameIsLive) {
             this.game.move(0, this.cameraSpeed);
             this.uim.makeVisible();
 
         }
     }
 
-    public void decreaseMainTowerHp(int damage) {
-        this.uim.updateHpBar(damage);
+    private void changeMainHpIndicator() {
+        int currentHp = this.game.getMainHp();
+        int maxHp = this.game.getMaxMainHp();
+        this.uim.updateHpBar(currentHp, maxHp);
     }
 }

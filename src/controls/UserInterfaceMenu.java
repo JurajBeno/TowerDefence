@@ -6,7 +6,7 @@ public class UserInterfaceMenu {
     private TowersMenu towersMenu;
 
     public UserInterfaceMenu(int hpOfTower) {
-        this.hpBar = new MainHpBar(hpOfTower);
+        this.hpBar = new MainHpBar();
         this.towersMenu = new TowersMenu();
     }
 
@@ -14,16 +14,18 @@ public class UserInterfaceMenu {
         return this.towersMenu.clickTower(y, x);
     }
 
-    public void updateHpBar(int howMuch) {
-        this.hpBar.updateBar(howMuch);
+    public void updateHpBar(int hp, int maxHp) {
+        this.hpBar.updateBar(hp, maxHp);
     }
 
-    public void resetHp() {
-        this.hpBar.resetHp();
-    }
 
     public void deselect() {
         this.towersMenu.deselect();
+    }
+
+    public void makeInvisible() {
+        this.hpBar.makeInvisible();
+        this.towersMenu.makeInvisible();
     }
 
     public void makeVisible() {

@@ -38,4 +38,8 @@ public class Tower implements java.io.Serializable {
     public String getName() {
         return this.name;
     }
+
+    public void makeInvisible() {
+        this.img.makeInvisible();
+    }
 }

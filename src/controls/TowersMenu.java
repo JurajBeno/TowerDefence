@@ -75,7 +75,7 @@ public class TowersMenu {
         return TowerSelected.MISSCLICK;
     }
 
-    public void makeVisible() {
+    public void makeInvisible() {
         this.backGroundBalista.makeInvisible();
         this.backGroundPoison.makeInvisible();
         this.backGroundFire.makeInvisible();
@@ -85,7 +85,10 @@ public class TowersMenu {
         this.fireIcon.makeInvisible();
         this.freezingIcon.makeInvisible();
         this.balistIcon.makeInvisible();
+    }
 
+    public void makeVisible() {
+        this.makeInvisible();
         this.backGroundBalista.makeVisible();
         this.backGroundPoison.makeVisible();
         this.backGroundFire.makeVisible();

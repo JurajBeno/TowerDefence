@@ -24,6 +24,12 @@ public class Wave {
         this.parent = parent;
     }
 
+    public void makeInvisible() {
+        for (Enemy attacker : this.attackers) {
+            attacker.die();
+        }
+    }
+
     public int getNumberOfAttackers() {
         return this.attackers.size();
     }

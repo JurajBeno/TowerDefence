@@ -5,6 +5,7 @@ import controls.clickResults.MissClick;
 import controls.clickResults.PlaceTowerResult;
 import controls.clickResults.StartWaveResult;
 import towers.DefenceTower;
+import towers.MainTower;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,11 +15,18 @@ public class Board implements java.io.Serializable {
     private final Random random;
     private GenerateNewBlockButton genButt;
 
-    public Board(Random random) {
+    public Board(Random random, MainTower base) {
         this.random = random;
         this.blocks = new ArrayList<>();
-        this.blocks.add(new BoardBlock(1, 1, random));
+        this.blocks.add(new BoardBlock(1, 1, random, base));
         this.setUpGenNewButton();
+    }
+
+    public void makeInvisible() {
+        for (BoardBlock block : this.blocks) {
+            block.makeInvisible();
+        }
+        this.genButt.makeInvisible();
     }
 
     public ArrayList<Road> getWholePath() {

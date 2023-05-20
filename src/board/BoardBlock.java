@@ -1,11 +1,10 @@
 package board;
 
 import towers.DefenceTower;
-import towers.Tower;
+import towers.MainTower;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 public class BoardBlock implements java.io.Serializable {
@@ -30,7 +29,7 @@ public class BoardBlock implements java.io.Serializable {
         Collections.reverse(this.path);
     }
 
-    public BoardBlock(int y, int x, Random random) {
+    public BoardBlock(int y, int x, Random random, MainTower base) {
         this.random = random;
         this.y = y;
         this.x = x;
@@ -42,7 +41,15 @@ public class BoardBlock implements java.io.Serializable {
         this.buildPath();
         Collections.reverse(this.path);
         Land midLand = (Land)this.nodes[4][4];
-        midLand.setTower(new Tower( "Base", "assets\\towers\\base.png"));
+        midLand.setTower(base);
+    }
+
+    public void makeInvisible() {
+        for (int i = 0; i < this.nodes.length; i++) {
+            for (int j = 0; j < this.nodes[i].length; j++) {
+                this.nodes[i][j].makeInvisible();
+            }
+        }
     }
 
     public ArrayList<Road> getPathOnBlock() {
@@ -64,7 +71,6 @@ public class BoardBlock implements java.io.Serializable {
         var temp =  prewTemplate.getNextPossibleTemplates(prewOrientarion);
         this.template = temp.get(this.random.nextInt(temp.size() - 1));
         this.orientarion = this.template.getOtherOrientation(prewOrientarion);
-        System.out.println(this.orientarion);
     }
 
 

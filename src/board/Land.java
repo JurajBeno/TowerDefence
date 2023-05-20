@@ -61,6 +61,9 @@ public class Land implements Node, java.io.Serializable {
 
     @Override
     public void makeInvisible() {
+        if (this.tower != null) {
+            this.tower.makeInvisible();
+        }
         this.img.makeInvisible();
     }
 }

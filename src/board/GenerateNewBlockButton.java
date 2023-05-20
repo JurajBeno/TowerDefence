@@ -3,7 +3,7 @@ package board;
 import fri.shapesge.Rectangle;
 import fri.shapesge.Text;
 
-public class GenerateNewBlockButton {
+public class GenerateNewBlockButton {  //TODO to spawn button in proper direction of path
     private int y;
     private int x;
     private final Rectangle rectangle;

@@ -26,7 +26,7 @@ public class Wave {
     public Wave(double roundMultiplier, ArrayList<Road> path, Game parent) {
         this.y = path.get(path.size() - 1).getY();
         this.x = path.get(path.size() - 1).getX();
-        this.numberOfHeavy = (int)(roundMultiplier * 0);
+        this.numberOfHeavy = (int)(roundMultiplier * 1);
         this.numberOfLight = (int)(roundMultiplier * 2);
         this.attackers = new ArrayList<>();
         this.path = path;

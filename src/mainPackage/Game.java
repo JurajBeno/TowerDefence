@@ -97,7 +97,7 @@ public class Game {
      * initialize and starts wave
      */
     public void startWave() {
-        double multipier = 1 + 0.1 * this.waveNumber;
+        double multipier = 1 + 0.2 * this.waveNumber;
         var wholePath = this.board.getWholePath();
         this.wave = new Wave(multipier, wholePath, this);
         this.spawning = true;

@@ -60,7 +60,16 @@ public class Board {
     public void setUpGenNewButton() {
         int x = this.blocks.get(this.blocks.size() - 1).getX();
         int y = this.blocks.get(this.blocks.size() - 1).getY();
-        this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
+        Orientarion orientation = this.blocks.get(this.blocks.size() - 1).getOrientation();
+        if (orientation == Orientarion.EAST) {
+            this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
+        } else if (orientation == Orientarion.WEST) {
+            this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + (-64) * 2);
+        } else if (orientation == Orientarion.NORTH) {
+            this.genButt = new GenerateNewBlockButton(y + (-64) * 2, x + 64 * 4);
+        } else {
+            this.genButt = new GenerateNewBlockButton(y + 64 * 10, x + 64 * 4);
+        }
     }
 
     /**
@@ -72,8 +81,6 @@ public class Board {
         BoardBlock last = this.blocks.get(this.blocks.size() - 1);
         int y = last.getY() + last.getOrientation().getY() * 9 * 64;
         int x = last.getX() + last.getOrientation().getX() * 9 * 64;
-
-        System.out.println(y + " " + x);
         this.blocks.add(new BoardBlock(y, x, last.getTemplate(), last.getOrientation(), this.random));
     }
 

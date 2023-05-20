@@ -57,7 +57,6 @@ public class HpBar {
      */
     public void lowerHp(int damage) {
         this.hp -= damage;
-        System.out.println(this.hp);
         this.inner.changeSize( this.hp * 13 / this.maxHp, 2);
     }
 

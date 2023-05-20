@@ -81,7 +81,7 @@ public class BoardBlock {
 
     private void chooseTemplate(BlockTemplates prewTemplate, Orientarion prewOrientarion) {
         var temp =  prewTemplate.getNextPossibleTemplates(prewOrientarion);
-        this.template = temp.get(this.random.nextInt(temp.size() - 1));
+        this.template = temp.get(this.random.nextInt(temp.size()));
         this.orientarion = this.template.getOtherOrientation(prewOrientarion);
     }
 

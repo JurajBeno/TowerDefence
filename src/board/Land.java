@@ -1,6 +1,5 @@
 package board;
 
-import controls.ClickOnBoardResult;
 import fri.shapesge.Image;
 import towers.Tower;
 

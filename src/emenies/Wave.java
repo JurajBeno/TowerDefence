@@ -53,16 +53,12 @@ public class Wave {
      * manages all actions of enemies
      */
     public void tikWave() {
-        ArrayList<Integer> deleteOnIndexes = new ArrayList<>();
-        int index = 0;
         for (Enemy enemy : this.attackers) {
             if (enemy.getIndexOfPath() < 0) {
                 this.parent.hitMainTower(enemy.getDamage());
                 enemy.die();
-                deleteOnIndexes.add(index);
             } else if (enemy.getHp() <= 0) {
                 enemy.die();
-                deleteOnIndexes.add(index);
             } else if (enemy.getMoveIndex() == 0) {
                 enemy.walk(
                         this.path.get(enemy.getIndexOfPath()).getY() + 16,
@@ -72,12 +68,6 @@ public class Wave {
             enemy.decrementMoveIndex();
             enemy.addTowerEffects(this.parent.getEfectFromTower(enemy.getX(), enemy.getY()));
             enemy.dealWithEffects();
-            index++;
-        }
-        for (Integer deleteIndex : deleteOnIndexes) {
-            if (this.attackers.size() >= deleteIndex) {
-                this.attackers.remove((int)deleteIndex);
-            }
         }
     }
 
@@ -99,13 +89,13 @@ public class Wave {
     public boolean spawnEnemy() {
         if (this.numberOfHeavy > 0) {
             this.attackers.add(new Enemy("assets\\Enemies\\heavy.png",
-                    this.x + 16, this.y + 16, 100,
+                    this.x + 16, this.y + 16, 120,
                     this.path.size() - 1, 2, 8));
             this.numberOfHeavy--;
             return true;
         } else if (this.numberOfLight > 0) {
             this.attackers.add(new Enemy("assets\\Enemies\\light.png",
-                    this.x + 16, this.y + 16, 35,
+                    this.x + 16, this.y + 16, 60,
                     this.path.size() - 1, 1, 2));
             this.numberOfLight--;
             return true;

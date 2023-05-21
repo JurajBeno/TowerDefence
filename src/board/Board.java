@@ -13,7 +13,7 @@ import java.util.Random;
 public class Board {
     private final ArrayList<BoardBlock> blocks;
     private final Random random;
-    private GenerateNewBlockButton genButt;
+    private GenerateNewBlockButton genButton;
 
     /**
      * @param random random to determine random path
@@ -33,7 +33,7 @@ public class Board {
         for (BoardBlock block : this.blocks) {
             block.makeInvisible();
         }
-        this.genButt.makeInvisible();
+        this.genButton.makeInvisible();
     }
 
     /**
@@ -51,7 +51,7 @@ public class Board {
      * hides button
      */
     public void discardGenNewButton() {
-        this.genButt.makeInvisible();
+        this.genButton.makeInvisible();
     }
 
     /**
@@ -62,13 +62,13 @@ public class Board {
         int y = this.blocks.get(this.blocks.size() - 1).getY();
         Orientarion orientation = this.blocks.get(this.blocks.size() - 1).getOrientation();
         if (orientation == Orientarion.EAST) {
-            this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
+            this.genButton = new GenerateNewBlockButton(y + 64 * 4, x + 64 * 10);
         } else if (orientation == Orientarion.WEST) {
-            this.genButt = new GenerateNewBlockButton(y + 64 * 4, x + (-64) * 2);
+            this.genButton = new GenerateNewBlockButton(y + 64 * 4, x + (-64) * 2);
         } else if (orientation == Orientarion.NORTH) {
-            this.genButt = new GenerateNewBlockButton(y + (-64) * 2, x + 64 * 4);
+            this.genButton = new GenerateNewBlockButton(y + (-64) * 2, x + 64 * 4);
         } else {
-            this.genButt = new GenerateNewBlockButton(y + 64 * 10, x + 64 * 4);
+            this.genButton = new GenerateNewBlockButton(y + 64 * 10, x + 64 * 4);
         }
     }
 
@@ -90,7 +90,7 @@ public class Board {
      * @param x
      */
     public void move(int y, int x) {
-        this.genButt.move(y, x);
+        this.genButton.move(y, x);
         for (BoardBlock block : this.blocks) {
             block.move(y, x);
         }
@@ -103,7 +103,7 @@ public class Board {
      * @return result of clicking action
      */
     public ClickOnBoardResult click(int y, int x) {
-        if (this.genButt.click(y, x)) {
+        if (this.genButton.click(y, x)) {
             this.addBoardBlock();
             this.discardGenNewButton();
             return ClickOnBoardResult.START_WAWE;

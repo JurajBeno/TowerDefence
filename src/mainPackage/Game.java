@@ -27,9 +27,9 @@ public class Game {
      * create game instance
      * @param random to make randomness in game possible and consistent
      */
-    public Game(Random random) {
+    public Game(Random random, int mainHp) {
         this.random = random;
-        MainTower base = new MainTower( "Base", "assets\\towers\\base.png", 5);
+        MainTower base = new MainTower( "Base", "assets\\towers\\base.png", mainHp);
         this.board = new Board(this.random, base);
         this.spawning = false;
         this.waveNumber = 0;

@@ -30,6 +30,7 @@ public class GameControl {
     private boolean placingTower;
     private DefenceTower towerToPlace;
     private InGameMenu igm;
+    private final int mainHp;
 
     /**
      * creates instance of game control
@@ -44,6 +45,7 @@ public class GameControl {
         this.game = null;
         this.cameraSpeed = 10;
         this.placingTower = false;
+        this.mainHp = 100;
     }
 
     /**
@@ -76,7 +78,7 @@ public class GameControl {
                 this.game.makeInvisible();
                 this.uim.makeInvisible();
 
-                this.game = new Game(this.random);
+                this.game = new Game(this.random, this.mainHp);
                 this.uim = new UserInterfaceMenu(5);
                 this.gameIsLive = true;
             }
@@ -162,7 +164,7 @@ public class GameControl {
     private void handleMenuChoice(StartMenuOption option) {
         switch (option) {
             case STARTGAME -> {
-                this.game = new Game(this.random);
+                this.game = new Game(this.random, this.mainHp);
                 this.gameIsLive = true;
                 this.startGameWindow.setInvisible();
                 this.uim = new UserInterfaceMenu(100);

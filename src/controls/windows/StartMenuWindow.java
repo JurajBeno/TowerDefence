@@ -14,20 +14,20 @@ public class StartMenuWindow {
     private final Image exitButton;
     private boolean isVisible;
 
-    private final int xPos = 40;
-    private final int yPos = 50;
+    private final int xPos = 678;
+    private final int yPos = 240;
 
     private final int width = 110;
-    private final int height = 200;
+    private final int height = 180;
     public StartMenuWindow() {
         this.backRound = new Rectangle(this.xPos, this.yPos);
         this.backRound.changeSize(this.width, this.height);
         this.backRound.changeColor("yellow");
 
-        this.firstButton = new Image("assets\\startWindow\\start.png", 50, 60);
-        this.firstText = new Text("NEW GAME", 50, 110);
+        this.firstButton = new Image("assets\\startWindow\\start.png", 690, 260);
+        this.firstText = new Text("NEW GAME", 690, 310);
 
-        this.exitButton = new Image("assets\\startWindow\\exit.png", 50 , 200);
+        this.exitButton = new Image("assets\\startWindow\\exit.png", 690, 350);
         this.setVisible();
     }
 
@@ -38,11 +38,9 @@ public class StartMenuWindow {
      * @return what button was clicked from x and y positions
      */
     public StartMenuOption click(int y, int x) {
-        if (y > 60 && y < 95 && x > 50 && x < 150) {
+        if (y > 260 && y < 295 && x > 690 && x < 790) {
             return StartMenuOption.STARTGAME;
-        } else if (y > 110 && y < 145 && x > 50 && x < 150) {
-            return StartMenuOption.LOADGAME;
-        } else if (y > 200 && y < 235 && x > 50 && x < 150) {
+        } else if (y > 350 && y < 385 && x > 690 && x < 790) {
             return StartMenuOption.EXIT;
         }
         return StartMenuOption.MISSCLICK;

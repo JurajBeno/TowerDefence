@@ -6,7 +6,7 @@ import fri.shapesge.Text;
 /**
  * displays button to generate new board block and start next wave
  */
-public class GenerateNewBlockButton {  //TODO to spawn button in proper direction of path
+public class GenerateNewBlockButton {
     private int y;
     private int x;
     private final Rectangle rectangle;
